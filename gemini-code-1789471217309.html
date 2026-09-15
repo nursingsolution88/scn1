@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjeevani College Attendance Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .header-box {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* ब्लिंकिंग और कलरफुल हेडिंग */
+        .blinking-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            animation: colorBlink 1.2s infinite;
+        }
+
+        @keyframes colorBlink {
+            0% { color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; opacity: 1; }
+            25% { color: #00e676; text-shadow: 0 0 15px #00e676; opacity: 0.8; }
+            50% { color: #00e5ff; text-shadow: 0 0 20px #00e5ff; opacity: 0.4; }
+            75% { color: #ff4081; text-shadow: 0 0 15px #ff4081; opacity: 0.9; }
+            100% { color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; opacity: 1; }
+        }
+
+        /* लार्ज अटेंडेंस बटन */
+        .btn-container {
+            margin: 15px 0 25px 0;
+        }
+
+        .large-btn {
+            background: linear-gradient(45deg, #ff0844, #ffb199);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 8, 68, 0.5);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .large-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 8, 68, 0.7);
+        }
+
+        /* उसी इंटरफेस में लिंक दिखाने के लिए iFrame कंटेनर */
+        .frame-container {
+            width: 100%;
+            max-width: 1100px;
+            height: 75vh;
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            display: none;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            border: 3px solid #ffeb3b;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* हॉस्टल ऐड पॉपअप (Modal) */
+        .ad-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .ad-card {
+            background: linear-gradient(135deg, #ffffff, #f3f4f6);
+            color: #333;
+            max-width: 480px;
+            width: 100%;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease-out;
+            border: 4px solid #25D366;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .ad-badge {
+            background: #ff0844;
+            color: #fff;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .ad-card h2 {
+            color: #1a237e;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .ad-card p {
+            font-size: 1rem;
+            color: #444;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* WhatsApp बटन */
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+            margin-bottom: 15px;
+            transition: 0.2s ease;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1ebe5d;
+            transform: scale(1.03);
+        }
+
+        .continue-btn {
+            background: #1d2671;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .continue-btn:hover {
+            background: #11174b;
+        }
+
+        @media (max-width: 600px) {
+            .blinking-title {
+                font-size: 1.4rem;
+            }
+            .large-btn {
+                font-size: 1.1rem;
+                padding: 14px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- हेडिंग -->
+    <div class="header-box">
+        <h1 class="blinking-title">SANJEEVANI COLLEGE ATTENDANCE</h1>
+    </div>
+
+    <!-- अटेंडेंस व्यू बटन -->
+    <div class="btn-container">
+        <button class="large-btn" onclick="handleAttendanceClick()">📋 ATTENDANCE VIEW</button>
+    </div>
+
+    <!-- उसी इंटरफ़ेस में खुलने वाला फ़्रेम -->
+    <div class="frame-container" id="frameBox">
+        <iframe id="attendanceFrame" src="" title="Attendance View"></iframe>
+    </div>
+
+    <!-- सिद्धि हॉस्टल ऐड पॉपअप -->
+    <div class="ad-modal" id="hostelAdModal">
+        <div class="ad-card">
+            <span class="ad-badge">SPECIAL ADMISSION OFFER</span>
+            <h2>🏢 SIDDHI GIRLS & BOYS HOSTEL</h2>
+            <p>शांत वातावरण, उत्तम भोजन, 24/7 वाई-फाई और सुरक्षित परिवेश।<br>सीमित सीटें उपलब्ध हैं! अभी संपर्क करें।</p>
+            
+            <!-- WhatsApp क्लिक बटन -->
+            <a href="https://wa.me/917683070771?text=Hello,%20I%20want%20information%20regarding%20Siddhi%20Girls%20&%20Boys%20Hostel" target="_blank" class="whatsapp-btn">
+                💬 Chat on WhatsApp (+91 76830 70771)
+            </a>
+
+            <!-- आगे अटेंडेंस पर जाने का विकल्प -->
+            <button class="continue-btn" onclick="closeAdAndLoadSite()">Proceed to Attendance ➜</button>
+        </div>
+    </div>
+
+    <script>
+        const targetUrl = "https://script.google.com/macros/s/AKfycbxsue2xunkXFDE3C-oQMWadkLU05kadRmmF6NhYoWa3QdAr3FkOlfIFxOeC1t-z_6jr/exec";
+        let isFirstClick = true;
+
+        function handleAttendanceClick() {
+            if (isFirstClick) {
+                // पहले क्लिक पर हॉस्टल का ऐड दिखेगा
+                document.getElementById('hostelAdModal').style.display = 'flex';
+                isFirstClick = false;
+            } else {
+                // बाद के क्लिक पर सीधे उसी पेज पर साइट लोड होगी
+                loadSite();
+            }
+        }
+
+        function closeAdAndLoadSite() {
+            document.getElementById('hostelAdModal').style.display = 'none';
+            loadSite();
+        }
+
+        function loadSite() {
+            const frameBox = document.getElementById('frameBox');
+            const attendanceFrame = document.getElementById('attendanceFrame');
+            
+            // iFrame को विज़िबल करके URL सेट करना
+            frameBox.style.display = 'block';
+            if (attendanceFrame.src !== targetUrl) {
+                attendanceFrame.src = targetUrl;
+            }
+            
+            // व्यू को स्क्रॉल करके iFrame पर लाना
+            frameBox.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
