@@ -18,15 +18,17 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 20px;
             color: #fff;
+            overflow-x: hidden;
         }
 
         .header-box {
             text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.12);
             border-radius: 15px;
             backdrop-filter: blur(10px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -36,62 +38,81 @@
 
         /* ब्लिंकिंग और कलरफुल हेडिंग */
         .blinking-title {
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             animation: colorBlink 1.2s infinite;
         }
 
         @keyframes colorBlink {
             0% { color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; opacity: 1; }
-            25% { color: #00e676; text-shadow: 0 0 15px #00e676; opacity: 0.8; }
-            50% { color: #00e5ff; text-shadow: 0 0 20px #00e5ff; opacity: 0.4; }
+            25% { color: #00e676; text-shadow: 0 0 15px #00e676; opacity: 0.85; }
+            50% { color: #00e5ff; text-shadow: 0 0 20px #00e5ff; opacity: 0.5; }
             75% { color: #ff4081; text-shadow: 0 0 15px #ff4081; opacity: 0.9; }
             100% { color: #ffeb3b; text-shadow: 0 0 10px #ffeb3b; opacity: 1; }
         }
 
         /* लार्ज अटेंडेंस बटन */
-        .btn-container {
-            margin: 15px 0 25px 0;
-        }
-
         .large-btn {
             background: linear-gradient(45deg, #ff0844, #ffb199);
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            padding: 18px 45px;
+            padding: 20px 50px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 8, 68, 0.5);
+            box-shadow: 0 12px 28px rgba(255, 8, 68, 0.55);
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1.5px;
         }
 
         .large-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 8, 68, 0.7);
+            transform: translateY(-3px) scale(1.06);
+            box-shadow: 0 16px 35px rgba(255, 8, 68, 0.75);
         }
 
-        /* उसी इंटरफेस में लिंक दिखाने के लिए iFrame कंटेनर */
-        .frame-container {
-            width: 100%;
-            max-width: 1100px;
-            height: 75vh;
-            background: #ffffff;
-            border-radius: 15px;
-            overflow: hidden;
+        /* --- 100% FULL SCREEN FRAME OVERLAY --- */
+        .fullscreen-overlay {
             display: none;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-            border: 3px solid #ffeb3b;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 10000;
         }
 
-        iframe {
+        .fullscreen-overlay iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
+        }
+
+        /* फुल स्क्रीन बंद करने का फ्लोटिंग बटन */
+        .close-fullscreen-btn {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            z-index: 10001;
+            background: #ff0844;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: 0.2s;
+        }
+
+        .close-fullscreen-btn:hover {
+            background: #d00034;
+            transform: scale(1.05);
         }
 
         /* हॉस्टल ऐड पॉपअप (Modal) */
@@ -102,23 +123,23 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 99999;
             justify-content: center;
             align-items: center;
             padding: 15px;
         }
 
         .ad-card {
-            background: linear-gradient(135deg, #ffffff, #f3f4f6);
+            background: linear-gradient(135deg, #ffffff, #f9fafb);
             color: #333;
             max-width: 480px;
             width: 100%;
             border-radius: 20px;
-            padding: 25px;
+            padding: 28px;
             text-align: center;
             position: relative;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             animation: zoomIn 0.3s ease-out;
             border: 4px solid #25D366;
         }
@@ -131,24 +152,24 @@
         .ad-badge {
             background: #ff0844;
             color: #fff;
-            padding: 5px 12px;
-            font-size: 0.8rem;
+            padding: 5px 14px;
+            font-size: 0.85rem;
             font-weight: bold;
             border-radius: 20px;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .ad-card h2 {
             color: #1a237e;
             font-size: 1.8rem;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .ad-card p {
             font-size: 1rem;
             color: #444;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
             line-height: 1.5;
         }
 
@@ -161,30 +182,31 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 14px 28px;
+            padding: 14px 26px;
             border-radius: 35px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: bold;
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             transition: 0.2s ease;
+            width: 100%;
         }
 
         .whatsapp-btn:hover {
             background-color: #1ebe5d;
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
         .continue-btn {
             background: #1d2671;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95rem;
-            display: block;
-            margin: 0 auto;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
         }
 
         .continue-btn:hover {
@@ -193,11 +215,11 @@
 
         @media (max-width: 600px) {
             .blinking-title {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
             .large-btn {
-                font-size: 1.1rem;
-                padding: 14px 30px;
+                font-size: 1.2rem;
+                padding: 16px 32px;
             }
         }
     </style>
@@ -210,12 +232,13 @@
     </div>
 
     <!-- अटेंडेंस व्यू बटन -->
-    <div class="btn-container">
+    <div>
         <button class="large-btn" onclick="handleAttendanceClick()">📋 ATTENDANCE VIEW</button>
     </div>
 
-    <!-- उसी इंटरफ़ेस में खुलने वाला फ़्रेम -->
-    <div class="frame-container" id="frameBox">
+    <!-- 100% फुल स्क्रीन पोर्टल व्यू -->
+    <div class="fullscreen-overlay" id="fullScreenBox">
+        <button class="close-fullscreen-btn" onclick="closeFullScreen()">✕ Close View</button>
         <iframe id="attendanceFrame" src="" title="Attendance View"></iframe>
     </div>
 
@@ -226,13 +249,13 @@
             <h2>🏢 SIDDHI GIRLS & BOYS HOSTEL</h2>
             <p>शांत वातावरण, उत्तम भोजन, 24/7 वाई-फाई और सुरक्षित परिवेश।<br>सीमित सीटें उपलब्ध हैं! अभी संपर्क करें।</p>
             
-            <!-- WhatsApp क्लिक बटन -->
+            <!-- WhatsApp बटन -->
             <a href="https://wa.me/917683070771?text=Hello,%20I%20want%20information%20regarding%20Siddhi%20Girls%20&%20Boys%20Hostel" target="_blank" class="whatsapp-btn">
                 💬 Chat on WhatsApp (+91 76830 70771)
             </a>
 
-            <!-- आगे अटेंडेंस पर जाने का विकल्प -->
-            <button class="continue-btn" onclick="closeAdAndLoadSite()">Proceed to Attendance ➜</button>
+            <!-- आगे बढ़ने का बटन -->
+            <button class="continue-btn" onclick="closeAdAndOpenFullScreen()">Proceed to Attendance ➜</button>
         </div>
     </div>
 
@@ -242,32 +265,32 @@
 
         function handleAttendanceClick() {
             if (isFirstClick) {
-                // पहले क्लिक पर हॉस्टल का ऐड दिखेगा
                 document.getElementById('hostelAdModal').style.display = 'flex';
                 isFirstClick = false;
             } else {
-                // बाद के क्लिक पर सीधे उसी पेज पर साइट लोड होगी
-                loadSite();
+                openFullScreen();
             }
         }
 
-        function closeAdAndLoadSite() {
+        function closeAdAndOpenFullScreen() {
             document.getElementById('hostelAdModal').style.display = 'none';
-            loadSite();
+            openFullScreen();
         }
 
-        function loadSite() {
-            const frameBox = document.getElementById('frameBox');
-            const attendanceFrame = document.getElementById('attendanceFrame');
-            
-            // iFrame को विज़िबल करके URL सेट करना
-            frameBox.style.display = 'block';
-            if (attendanceFrame.src !== targetUrl) {
-                attendanceFrame.src = targetUrl;
+        function openFullScreen() {
+            const overlay = document.getElementById('fullScreenBox');
+            const frame = document.getElementById('attendanceFrame');
+
+            overlay.style.display = 'block';
+            if (frame.src !== targetUrl) {
+                frame.src = targetUrl;
             }
-            
-            // व्यू को स्क्रॉल करके iFrame पर लाना
-            frameBox.scrollIntoView({ behavior: 'smooth' });
+            document.body.style.overflow = 'hidden'; // बैकग्राउंड स्क्रॉल लॉक
+        }
+
+        function closeFullScreen() {
+            document.getElementById('fullScreenBox').style.display = 'none';
+            document.body.style.overflow = 'auto'; // स्क्रॉल वापस चालू
         }
     </script>
 </body>
